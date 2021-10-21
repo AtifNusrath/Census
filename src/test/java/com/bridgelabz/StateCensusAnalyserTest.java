@@ -1,21 +1,20 @@
 package com.bridgelabz;
 
 import org.junit.jupiter.api.Test;
-import java.io.IOException;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class StateCensusAnalyserTest {
     @Test
     public void checkToEnsure_NumberOfRecordsMatches() throws CSVCensusException {
         StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser("StateCensus.csv");
-        assertEquals(37, stateCensusAnalyser.readStateData());
+        assertEquals(37, stateCensusAnalyser.readStateData(CSVStateCensus.class));
     }
 
     @Test
     public void givenWrongFileName_ShouldThrowNoSuchFileException() {
         StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser("StateCensus12.csv");
         try {
-            int value = stateCensusAnalyser.readStateData();
+            int value = stateCensusAnalyser.readStateData(CSVStateCensus.class);
             assertEquals(37, value);
 
         } catch (CSVCensusException e) {
@@ -28,20 +27,20 @@ public class StateCensusAnalyserTest {
     public void givenWrongFilePath_ShouldThrowRunTimeException() {
         try {
             StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser("gradlew.bat");
-            int checkNumberOfRecords = stateCensusAnalyser.readStateData();
+            int checkNumberOfRecords = stateCensusAnalyser.readStateData(CSVStateCensus.class);
             assertEquals(37, checkNumberOfRecords);
 
         } catch (CSVCensusException e) {
             e.printStackTrace();
-           assertEquals("binding of file to failed", e.getMessage());
+           assertEquals("Exception due to Header or mismatch data", e.getMessage());
         }
     }
 
     @Test
-    public void givenMethod_ifFoundIncorrectDelimiterPosition_ShouldReturnException() throws IOException, CSVCensusException {
+    public void givenMethod_ifFoundIncorrectDelimiterPosition_ShouldReturnException()  {
         try {
             StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser("StateCensus.csv");
-            int value = stateCensusAnalyser.readStateData();
+            int value = stateCensusAnalyser.readStateData(CSVStateCensus.class);
             assertEquals(37, value);
         } catch (CSVCensusException e) {
             System.out.println(e.getMessage());
@@ -55,7 +54,7 @@ public class StateCensusAnalyserTest {
 
         try {
             StateCensusAnalyser stateCensusAnalyser = new StateCensusAnalyser("StateCensus.csv");
-            int value = stateCensusAnalyser.readStateData();
+            int value = stateCensusAnalyser.readStateData(CSVStateCensus.class);
             assertEquals(37, value);
         }
         catch (CSVCensusException e)
